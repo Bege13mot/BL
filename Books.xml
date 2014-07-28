@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?> 
+<booklibrary>
+	<book       	 
+	title="Колобок"
+	author="Народ"
+	description="Сказка о колобке, и его приключениях."       	   
+	year="1921"  
+	cover="E:\\Source\\Book Library\\Колобок.jpg"
+	url="C://Колобок"
+	shelf="cказка">	   
+	</book>
+	<book       	 
+	title="Мальчик с пальчик"
+	author="Народ"
+	description="Сказка о колобке, и его приключенияхasdf asf adfasdfas asdf as sadfsadfasdfasdf."       	   
+	year="1923"  
+	cover="Колобок.jpg"
+	url="C://Колобок"
+	shelf="cказка">	   
+	</book>
+	<book       	 
+	title="Война и мир"
+	author="Толстой"
+	description="Сказка о колобке, и его приключениях."       	   
+	year="1924"  
+	cover="Колобок.jpg"
+	url="C://Колобок"
+	shelf="роман">	   
+	</book>
+	<book       	 
+	title="Идиот"
+	author="Достоевский"
+	description="Сказка о колобке, и его приключениях."       	   
+	year="1925"  
+	cover="Колобок.jpg"
+	url="C://Колобок"
+	shelf="роман">	   
+	</book>
+<book       	 
+	title="Царица медной горы"
+	author="Народ"
+	description="Сказка о колобке, и его приключениях."       	   
+	year="1923"  
+	cover="Колобок.jpg"
+	url="C://Колобок"
+	shelf="cказка">	   
+	</book>
+<book       	 
+	title="Роман роман"
+	author="Народ"
+	description="Сказка о колобке, и его приключениях."       	   
+	year="1923"  
+	cover="Колобок.jpg"
+	url="C://Колобок"
+	shelf="роман">	   
+	</book>
+</booklibrary>
+ 
+ 
+
+    

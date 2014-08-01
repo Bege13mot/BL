@@ -11,8 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-using Test1.ViewModel;
 using System.ComponentModel;
 
 using System.Windows.Controls.Primitives;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace Test1.ViewModel
+namespace BookLibrary.ViewModel
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
@@ -14,7 +10,7 @@ namespace Test1.ViewModel
 
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler eventHandler = this.PropertyChanged;
+            PropertyChangedEventHandler eventHandler = PropertyChanged;
 
             if (eventHandler != null)
             {

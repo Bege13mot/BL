@@ -3,55 +3,55 @@
 	<book       	 
 	title="Колобок"
 	author="Народ"
-	description="Сказка о колобке, и его приключениях."       	   
-	year="1921"  
-	cover="E:\\Source\\Book Library\\Колобок.jpg"
-	url="C://Колобок"
+	description="Сказка о колобке, и его приключениях"       	   
+	year="1821"  
+	cover="d:\\Source\\Book Library\\Image\\Колобок.jpg" 
+	url="http://hyaenidae.narod.ru/story1/032.html"
 	shelf="cказка">	   
 	</book>
 	<book       	 
 	title="Мальчик с пальчик"
-	author="Народ"
-	description="Сказка о колобке, и его приключенияхasdf asf adfasdfas asdf as sadfsadfasdfasdf."       	   
-	year="1923"  
-	cover="Колобок.jpg"
-	url="C://Колобок"
+	author="Шарль Перро"
+	description="Захватывающая история маленького мальчика"       	   
+	year="1912"  
+	cover="d:\Source\Book Library\Image\boy.jpg" 
+	url="http://www.kostyor.ru/tales/tale40.html"
 	shelf="cказка">	   
 	</book>
 	<book       	 
 	title="Война и мир"
-	author="Толстой"
-	description="Сказка о колобке, и его приключениях."       	   
-	year="1924"  
-	cover="Колобок.jpg"
-	url="C://Колобок"
+	author="Толстой Л.Н"
+	description=" роман-эпопея Льва Николаевича Толстого, описывающий русское общество в эпоху войн против Наполеона"       	   
+	year="1869"  
+	cover="d:\Source\Book Library\Image\war.jpg" 
+	url="http://www.ilibrary.ru/text/11/index.html"
 	shelf="роман">	   
 	</book>
 	<book       	 
 	title="Идиот"
-	author="Достоевский"
-	description="Сказка о колобке, и его приключениях."       	   
-	year="1925"  
-	cover="Колобок.jpg"
-	url="C://Колобок"
+	author="Достоевский Ф.М"
+	description="Роман о трагедии современного человека"       	   
+	year="1869"  
+	cover="d:\Source\Book Library\Image\idiot.jpg" 
+	url="http://www.ilibrary.ru/text/94/index.html"
 	shelf="роман">	   
 	</book>
 <book       	 
-	title="Царица медной горы"
-	author="Народ"
-	description="Сказка о колобке, и его приключениях."       	   
-	year="1923"  
-	cover="Колобок.jpg"
-	url="C://Колобок"
+	title="Хозяйка медной горы"
+	author="Бажов П.П"
+	description="Сказ о мифической хозяйки Уральских гор"       	   
+	year="1918"  
+	cover="d:\Source\Book Library\Image\queen.jpg"
+	url="http://bookz.ru/authors/bajov-pavel/bazhov03.html"
 	shelf="cказка">	   
 	</book>
 <book       	 
-	title="Роман роман"
-	author="Народ"
-	description="Сказка о колобке, и его приключениях."       	   
-	year="1923"  
-	cover="Колобок.jpg"
-	url="C://Колобок"
+	title="Алые паруса"
+	author="Грин А.С"
+	description="Повесть-феерия о непоколебимой вере в чудо и всепобеждающей, возвышенной мечте"       	   
+	year="1922"  
+	cover="d:\Source\Book Library\Image\red.jpg" 
+	url="http://lib.ru/RUSSLIT/GRIN/parusa.txt"
 	shelf="роман">	   
 	</book>
 </booklibrary>

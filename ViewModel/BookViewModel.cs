@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using Test1.Helper;
-using Test1.Model;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
+using System.Windows.Input;
 using System.Xml.Linq;
+using BookLibrary.Helper;
+using BookLibrary.Model;
+using System.Configuration;
 
-using System.Windows.Data;
-using System.ComponentModel;
-
-
-namespace Test1.ViewModel
+namespace BookLibrary.ViewModel
 {
     class BookViewModel : BaseViewModel
     {
         #region Properties
 
-        private string xmlPath;
+        private string _xmlPath;
 
         /// <summary>
         /// Путь к XML файлу
         /// </summary>
-        public string XMLPath
+        public string XmlPath
         {
             get
             {
-                return xmlPath;
+                return _xmlPath;
             }
             set
             {
-                this.xmlPath = value;
-                this.OnPropertyChanged("XMLPath");
+                _xmlPath = value;
+                OnPropertyChanged("XMLPath");
             }
         }
 
-        private string errorMessage;
+        private string _errorMessage;
 
         /// <summary>
         /// Сообщение об ошибке на WPF
@@ -46,97 +40,95 @@ namespace Test1.ViewModel
         {
             get
             {
-                return errorMessage;
+                return _errorMessage;
             }
             set
             {
-                this.errorMessage = value;
-                this.OnPropertyChanged("ErrorMessage");
+                _errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
             }
         }
 
-        private string searchQuery;
+        private string _searchQuery;
 
         public string SearchQuery
         {
             get
             {
-                return this.searchQuery;
+                return _searchQuery;
             }
             set
             {
-                this.searchQuery = value;
-                this.OnPropertyChanged("SearchQuery");
+                _searchQuery = value;
+                OnPropertyChanged("SearchQuery");
             }
         }
         
-        private MyObservableCollection<Book> bookListCollection;
+        private ObservableCollection<Book> _bookListCollection;
 
-        public MyObservableCollection<Book> BookListCollection
+        public ObservableCollection<Book> BookListCollection
         {
             get
             {
-                if (bookListCollection == null)
+                if (_bookListCollection == null)
                 {                    
-                    this.bookListCollection = new MyObservableCollection<Book>();                    
+                    _bookListCollection = new ObservableCollection<Book>();                    
                 }
-                return bookListCollection;
+                return _bookListCollection;
             }
             set
             {
-                bookListCollection = value;
-                this.OnPropertyChanged("BookList");
+                _bookListCollection = value;
+                OnPropertyChanged("BookList");
             }
         }
 
-        private ObservableCollection<Book> bookSelectResults;
-
-       
+        private ObservableCollection<Book> _bookSelectResults;
+        
         public ObservableCollection<Book> BookSelectResults
         {
             get
             {
-                if (bookSelectResults == null)
+                if (_bookSelectResults == null)
                 {
-                    this.bookSelectResults = new ObservableCollection<Book>();
+                    _bookSelectResults = new ObservableCollection<Book>();
                 }
-                return bookSelectResults;
+                return _bookSelectResults;
             }
             set
             {
-                bookSelectResults = value;
-                this.OnPropertyChanged("BookSelectResults");
+                _bookSelectResults = value;
+                OnPropertyChanged("BookSelectResults");
             }
 
         }
                 
         // Блокировка обьекта, для исключения конкуренции
-        private object lockObject = new object();            
-
+        private object lockObject = new object();
         
         #endregion
 
+
         #region Commands
 
-        private ICommand xmlProcessCommand;
+        //private ICommand _xmlProcessCommand;
         
-
         /// <summary>
         /// Relay Command для загрузки списка книг из XML
         /// </summary>
-        public ICommand XMLProcessCommand
-        {
-            get
-            {
-                if (xmlProcessCommand == null)
-                {
-                    xmlProcessCommand = new RelayCommand(ProcessXML);
-                }
-                return xmlProcessCommand;
-            }
-        }
+        //public ICommand XMLProcessCommand
+        //{
+        //    get
+        //    {
+        //        if (_xmlProcessCommand == null)
+        //        {
+        //            _xmlProcessCommand = new RelayCommand(ProcessXml);
+        //        }
+        //        return _xmlProcessCommand;
+        //    }
+        //}
 
-        private ICommand selectCommand;
+        private ICommand _selectCommand;
 
         /// <summary>
         /// Relay Command для поиска выбранной книги по Title
@@ -145,37 +137,29 @@ namespace Test1.ViewModel
         {
             get
             {
-                if (selectCommand == null)
+                if (_selectCommand == null)
                 {
-                    selectCommand = new RelayCommand(BookSelectByClick);
+                    _selectCommand = new RelayCommand(BookSelectByClick);
                 }
-                return selectCommand;
+                return _selectCommand;
             }
         }
+
+        #endregion
         
-
-        #endregion
-
-        #region Constructor
-
-        public BookViewModel()
-        {
-        }
-
-        #endregion
 
         #region Actions
 
         /// <summary>
         /// Загрузка всех книг в коллекцию
         /// </summary>
-        /// <param name="param">XML File source path</param>
-        public void ProcessXML(object param)
+        public void ProcessXml() //(object param)
         {
-            string fileName = param as string;
+            string fileName = ConfigurationManager.AppSettings["FilePath"];
+            //string fileName = param as string;
 
             // Очистка Error Message в случае если читать другой XML файл
-            this.ErrorMessage = string.Empty;
+            ErrorMessage = string.Empty;
 
             lock (lockObject)
             {
@@ -183,67 +167,72 @@ namespace Test1.ViewModel
                 try
                 {
                     // Чтение XML через Linq
-                    xmlDoc = XMLParser.GetXMLDataFromFileName(fileName);
+                    xmlDoc = XmlParser.GetXmlDataFromFileName(fileName);
                 }
                 catch (FileNotFoundException ex)
                 {
-                    this.ErrorMessage = ex.Message;
+                    ErrorMessage = ex.Message;
                 }
 
                 if (xmlDoc != null)
                 {
                     // Заполнение данных из XML используя Linq
-                    var books = (from material in xmlDoc.Element("booklibrary").Elements("book")
-                                     select new
-                                     {
-                                         Title = (string)material.Attribute("title"),
-                                         Author = (string)material.Attribute("author"),
-                                         Description = (string)material.Attribute("description"),
-                                         Year = (int)material.Attribute("year"),
-                                         Cover = (string)material.Attribute("cover"),
-                                         Url = (string)material.Attribute("url"),
-                                         Shelf = (string)material.Attribute("shelf")
-                                     });
-
-
-                    this.BookListCollection.IsUpdatePaused = true;
-
-                    // Добавить все книги в коллекцию
-                    foreach (var book in books)
+                    var element = xmlDoc.Element("booklibrary");
+                    if (element != null)
                     {
-                        this.BookListCollection.Add(
-                            new Book
+                        var books = (from material in element.Elements("book")
+                            select new
                             {
-                                Title = book.Title,
-                                Author = book.Author,
-                                Description = book.Description,
-                                Year = book.Year,
-                                Cover = book.Cover,
-                                Url = book.Url,
-                                Shelf = book.Shelf
-                            }
+                                Title = (string)material.Attribute("title"),
+                                Author = (string)material.Attribute("author"),
+                                Description = (string)material.Attribute("description"),
+                                Year = (int)material.Attribute("year"),
+                                Cover = (string)material.Attribute("cover"),
+                                Url = (string)material.Attribute("url"),
+                                Shelf = (string)material.Attribute("shelf")
+                            });
+
+
+                        //this.BookListCollection.IsUpdatePaused = true;
+
+                        // Добавить все книги в коллекцию
+                        foreach (var book in books)
+                        {
+                            BookListCollection.Add(
+                                new Book
+                                {
+                                    Title = book.Title,
+                                    Author = book.Author,
+                                    Description = book.Description,
+                                    Year = book.Year,
+                                    Cover = book.Cover,
+                                    Url = book.Url,
+                                    Shelf = book.Shelf
+                                }
                                 );
+                        }
                     }
 
-                    this.BookListCollection.IsUpdatePaused = false;
+                    //this.BookListCollection.IsUpdatePaused = false;
                 }
             }
         }
 
+        
         public void BookSelectByClick(object param)
         {
-            string searchQuery = param as string;
+            var searchQuery = param as string;
 
             if (searchQuery == null)
             {
-                this.ErrorMessage = "Ошибка: запрос невеверный";
+                ErrorMessage = "Ошибка: запрос невеверный";
                 return;
             }
 
-            this.BookSelectResults.Clear();
+            BookSelectResults.Clear();
 
-            this.BookSelectResults = new ObservableCollection<Book>(
-                this.BookListCollection.Where(
+            BookSelectResults = new ObservableCollection<Book>(
+                BookListCollection.Where(
                     x => x.Title.Contains(searchQuery)
                                                 ));
 

@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
+using BookLibrary.ViewModel;
 using Test1.View;
-using Test1.ViewModel;
 
-namespace Test1
+namespace BookLibrary
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow window = new MainWindow();
-            BookViewModel bookViewModel = new BookViewModel();
+            
+            var window = new MainWindow();
+            var bookViewModel = new BookViewModel();
+            bookViewModel.ProcessXml();
             window.DataContext = bookViewModel;
             window.Show();
         }

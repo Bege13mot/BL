@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Xml.Linq;
-using System.IO;
 
-namespace Test1.Helper
+namespace BookLibrary.Helper
 {
-    class XMLParser
+    static class XmlParser
     {
         /// <summary>
         /// Загружает XML Data File из выбранной директории
         /// </summary>
         /// <param name="fileName">File Source Path</param>
         /// <returns>Queryable XML doc</returns>
-        public static XDocument GetXMLDataFromFileName(string fileName)
+        public static XDocument GetXmlDataFromFileName(string fileName)
         {
             // Validate File Path
-            if (fileName == null || !System.IO.File.Exists((string)fileName))
+            if (fileName == null || !File.Exists(fileName))
             {
-                throw new FileNotFoundException("Не найден путь к XML.");
+                throw new FileNotFoundException("Не найден путь к XML");
             }
 
-            FileStream xmlStream = new FileStream(fileName, FileMode.Open);
+            var xmlStream = new FileStream(fileName, FileMode.Open);
 
             return XDocument.Load(xmlStream);
         }

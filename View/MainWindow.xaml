@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:ViewModel="clr-namespace:Test1.ViewModel" x:Class="Test1.View.MainWindow"        
+    x:Class="Test1.View.MainWindow"        
         Title="Book Library" 
         WindowStartupLocation="CenterScreen"
         Height="600" Width="700">
@@ -42,13 +42,7 @@
 
 
         <Label Content="{Binding ErrorMessage}" x:Name="ErrorLabel" HorizontalAlignment="Center" FontWeight="Bold" Grid.Row="0" Grid.ColumnSpan="3" Foreground="Red"  />
-        <Label Content="Введите полный путь к XML файлу" x:Name="Instruction1" Grid.Row="1" Grid.ColumnSpan="3" Foreground="#FF0027FF"  />
-        <Label Content="Путь:" x:Name="PathLabel" Grid.Row="2" Grid.Column="0" Width="auto"/>
-        <TextBox Grid.Row="2" Grid.Column="1"  x:Name="textBox1" Width="auto" Margin="5,0,5,0" Text="{Binding XMLPath}"/>
-        <Button Grid.Row="2" Grid.Column="3" Content="Process XML" Margin="5,0,10,0" Command="{Binding XMLProcessCommand}" CommandParameter="{Binding XMLPath}"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="E:\Source\Book Library\Books.xml" ToolTip="Default Path" x:Name="DefaultPath" HorizontalAlignment="Left"  Width="auto" Margin="5,5,0,0" />
-        <Label Content="Пример строки:" Grid.Row="3" Grid.Column="0" Width="auto" />
-
+        
         <!-- Список книг -->
         <ListView x:Name="BookListView" Grid.Row="5" ItemsSource="{Binding Source={StaticResource ListCollection}}" HorizontalAlignment="Left" Margin="-18,0,0,137" Width="305" HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderBrush="Black" Grid.ColumnSpan="2" Grid.RowSpan="4" Height="301" VerticalAlignment="Bottom" >
             <i:Interaction.Triggers>

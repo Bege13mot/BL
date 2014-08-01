@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace Test1.Model
+namespace BookLibrary.Model
 {
-    // Сводка:
     //     Уведомляет клиентов об изменении значения свойства.
     public interface INotifyPropertyChanged
     {
@@ -19,131 +14,116 @@ namespace Test1.Model
     {
         #region Properties
 
-        private string title;
+        private string _title;
 
         public string Title
         {
             get
             {
-                return title;
+                return _title;
             }
             set
             {
-                title = value;
+                _title = value;
                 OnPropertyChanged("Title");
             }
         }
 
-        private string author;
+        private string _author;
 
         public string Author
         {
             get
             {
-                return author;
+                return _author;
             }
             set
             {
-                author = value;
+                _author = value;
                 OnPropertyChanged("Author");
             }
         }
 
-        private string description;
+        private string _description;
 
         public string Description
         {
             get
             {
-                return description;
+                return _description;
             }
             set
             {
-                description = value;
+                _description = value;
                 OnPropertyChanged("Description");
             }
         }
 
-        private int year;
+        private int _year;
 
         public int Year
         {
             get
             {
-                return year;
+                return _year;
             }
             set
             {
-                year = value;
+                _year = value;
                 OnPropertyChanged("Year");
             }
         }
 
-        private string cover;
+        private string _cover;
 
         public string Cover
         {
             get
             {
-                return cover;
+                return _cover;
             }
             set
             {
-                cover = value;
+                _cover = value;
                 OnPropertyChanged("Cover");
             }
         }
 
-        private string url;
+        private string _url;
 
         public string Url
         {
             get
             {
-                return url;
+                return _url;
             }
             set
             {
-                url = value;
+                _url = value;
                 OnPropertyChanged("Url");
             }
         }
 
-        private string shelf;
+        private string _shelf;
 
         public string Shelf
         {
             get
             {
-                return shelf;
+                return _shelf;
             }
             set
             {
-                shelf = value;
+                _shelf = value;
                 OnPropertyChanged("Count");
             }
         }              
 
         #endregion
-
-        #region Constructor
-
-        public Book()
-        {
-            this.Title = string.Empty;
-            this.Author = string.Empty;
-            this.Description = string.Empty;
-            this.Year = 0 ;
-            this.Cover = string.Empty;
-            this.Url = string.Empty;
-            this.Shelf = string.Empty;
-        }
-
-        #endregion
-
+    
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
             if (handler != null)

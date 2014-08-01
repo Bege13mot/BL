@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
-namespace Test1.ViewModel
+namespace BookLibrary.ViewModel
 {
     /// <summary>
     /// Custom relay command implementation
@@ -15,7 +12,7 @@ namespace Test1.ViewModel
 
         public RelayCommand(Action<object> action)
         {
-            this._action = action;
+            _action = action;
         }
 
         public void Execute(object parameter)

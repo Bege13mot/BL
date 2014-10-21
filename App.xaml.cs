@@ -1,19 +1,19 @@
 ﻿using System.Windows;
 using BookLibrary.ViewModel;
-using Test1.View;
+using BookLibrary;
 
 namespace BookLibrary
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public partial class App : Application
     {
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            
-            var window = new MainWindow();
+
+            var window = new Shell();
             var bookViewModel = new BookViewModel();
             bookViewModel.ProcessXml();
             window.DataContext = bookViewModel;

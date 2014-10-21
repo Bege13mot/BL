@@ -6,6 +6,9 @@ using System.Xml.Linq;
 using BookLibrary.Helper;
 using BookLibrary.Model;
 using System.Configuration;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+using System;
 
 namespace BookLibrary.ViewModel
 {
@@ -111,11 +114,22 @@ namespace BookLibrary.ViewModel
 
         #region Commands
 
-        //private ICommand _xmlProcessCommand;
-        
-        /// <summary>
-        /// Relay Command для загрузки списка книг из XML
-        /// </summary>
+        private string currentView = "List";
+
+        public void Execute(object list)
+        {
+            if (currentView == "List")
+            {
+                currentView = "Shelf";
+            }
+            else
+            {
+                currentView = "List";
+            }
+        }
+
+        //private ICommand _xmlProcessCommand;        
+         
         //public ICommand XMLProcessCommand
         //{
         //    get
@@ -145,8 +159,64 @@ namespace BookLibrary.ViewModel
             }
         }
 
+        #region ForPrism
+
+        private ICommand showView1InRegionCommand;
+        private ICommand showView2InRegionCommand;
+
+        //public ShellViewModel()
+        //{
+        //    showView1InRegionCommand = new SimpleCommand
+        //    {
+        //        CanExecuteDelegate = x => true,
+        //        ExecuteDelegate = x => ExecuteShowView1InRegionCommand()
+        //    };
+
+        //    showView2InRegionCommand = new SimpleCommand
+        //    {
+        //        CanExecuteDelegate = x => true,
+        //        ExecuteDelegate = x => ExecuteShowView2InRegionCommand()
+        //    };
+        //}
+
+
+        public ICommand ShowView1InRegionCommand
+        {
+            get { return showView1InRegionCommand; }
+        }
+
+        public ICommand ShowView2InRegionCommand
+        {
+            get { return showView2InRegionCommand; }
+        }
+
+
+        private void ExecuteShowView1InRegionCommand()
+        {
+            this.Resolve<IViewManager>().CreateAndShowViewInRegion(
+                "MainRegion", typeof(List));
+        }
+
+        private void ExecuteShowView2InRegionCommand()
+        {
+            this.Resolve<IViewManager>().ShowViewInRegion(
+                "MainRegion", new Shel());
+        }
+
         #endregion
-        
+
+        #endregion
+
+        //#region SwitchView
+
+        //IRegionManager rm =  ServiceLocator.Current.GetInstance<IRegionManager>();
+        //IRegion rgn = rm.Regions["ListRegion"];
+
+        //Uri vu = new Uri(currentView, UriKind.Relative);
+        //rgn.RequestNavigate(vu, CheckForError);
+
+        //#endregion
+
 
         #region Actions
 

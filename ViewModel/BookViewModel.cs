@@ -8,9 +8,8 @@ using BookLibrary.Model;
 using System.Configuration;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
-using System;
+using System.Reflection;
 using BookLibrary.View;
-using System.Windows;
 
 
 namespace BookLibrary.ViewModel
@@ -172,8 +171,9 @@ namespace BookLibrary.ViewModel
         /// </summary>
         public void ProcessXml() 
         {
-            string fileName = ConfigurationManager.AppSettings["FilePath"];
-            //string fileName = param as string;
+            const string fileName = @"Resource\Books.xml";
+
+            //string fileName = ConfigurationManager.AppSettings["FilePath"];
 
             // Очистка Error Message в случае если читать другой XML файл
             ErrorMessage = string.Empty;

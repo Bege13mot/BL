@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using BookLibrary.ViewModel;
-using BookLibrary;
+using Microsoft.Practices.Prism.MefExtensions;
 
 namespace BookLibrary
 {
@@ -9,11 +9,26 @@ namespace BookLibrary
     /// </summary>
     public partial class App : Application
     {
+        private MefBootstrapper _bootstrapper;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            _bootstrapper = new Boots();
+            _bootstrapper.Run();
+        }
+    }
 
-            var window = new Shell();
+    public class Boots : MefBootstrapper
+    {
+        protected override DependencyObject CreateShell()
+        {
+            return new MainWindow();
+        }
+
+        protected override void InitializeShell()
+        {
+            var window = Application.Current.MainWindow = Shell as Window;
             var bookViewModel = new BookViewModel();
             bookViewModel.ProcessXml();
             window.DataContext = bookViewModel;

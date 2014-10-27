@@ -3,27 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        x:Class="BookLibrary.Shell"        
+        x:Class="BookLibrary.MainWindow"        
         Title="Book Library" 
-        d:DesignHeight="450"
+        d:DesignHeight="500"
         d:DesignWidth="650"
-        xmlns:prism="http://www.codeplex.com/prism"
+        xmlns:prism="http://www.codeplex.com/prism"        
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         mc:Ignorable="d">
 
     <Grid>
 
-        <ContentControl prism:RegionManager.RegionName="MainRegion" Content="{Binding CurrentViewModel}" Height="430" Width="630"/>
+        <ContentControl prism:RegionManager.RegionName="MainRegion" Height="430" Width="621" Margin="12,32,11,60"/>
 
-        <DockPanel Margin="473,0,0,386">
+        <DockPanel Margin="473,0,0,490">
             <Button Width="75"
             	Height="23"
-            	Command="{Binding ListViewCommand}"
+            	Command="{Binding ListSwitch}"
             	Content="ListView" DockPanel.Dock="Left"/>
             <Button Width="75"
             	Height="23"
-            	Command="{Binding ShelfViewCommand}"
+            	Command="{Binding ShelfSwitch}"
             	Content="ShelfView" DockPanel.Dock="Right"/>
         </DockPanel>
 

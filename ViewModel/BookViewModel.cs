@@ -9,6 +9,9 @@ using System.Configuration;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
 using System;
+using BookLibrary.View;
+using System.Windows;
+
 
 namespace BookLibrary.ViewModel
 {
@@ -49,21 +52,6 @@ namespace BookLibrary.ViewModel
             {
                 _errorMessage = value;
                 OnPropertyChanged("ErrorMessage");
-            }
-        }
-
-        private string _searchQuery;
-
-        public string SearchQuery
-        {
-            get
-            {
-                return _searchQuery;
-            }
-            set
-            {
-                _searchQuery = value;
-                OnPropertyChanged("SearchQuery");
             }
         }
         
@@ -113,35 +101,7 @@ namespace BookLibrary.ViewModel
 
 
         #region Commands
-
-        private string currentView = "List";
-
-        public void Execute(object list)
-        {
-            if (currentView == "List")
-            {
-                currentView = "Shelf";
-            }
-            else
-            {
-                currentView = "List";
-            }
-        }
-
-        //private ICommand _xmlProcessCommand;        
-         
-        //public ICommand XMLProcessCommand
-        //{
-        //    get
-        //    {
-        //        if (_xmlProcessCommand == null)
-        //        {
-        //            _xmlProcessCommand = new RelayCommand(ProcessXml);
-        //        }
-        //        return _xmlProcessCommand;
-        //    }
-        //}
-
+        
         private ICommand _selectCommand;
 
         /// <summary>
@@ -158,64 +118,51 @@ namespace BookLibrary.ViewModel
                 return _selectCommand;
             }
         }
-
-        #region ForPrism
-
-        private ICommand showView1InRegionCommand;
-        private ICommand showView2InRegionCommand;
-
-        //public ShellViewModel()
-        //{
-        //    showView1InRegionCommand = new SimpleCommand
-        //    {
-        //        CanExecuteDelegate = x => true,
-        //        ExecuteDelegate = x => ExecuteShowView1InRegionCommand()
-        //    };
-
-        //    showView2InRegionCommand = new SimpleCommand
-        //    {
-        //        CanExecuteDelegate = x => true,
-        //        ExecuteDelegate = x => ExecuteShowView2InRegionCommand()
-        //    };
-        //}
-
-
-        public ICommand ShowView1InRegionCommand
-        {
-            get { return showView1InRegionCommand; }
-        }
-
-        public ICommand ShowView2InRegionCommand
-        {
-            get { return showView2InRegionCommand; }
-        }
-
-
-        private void ExecuteShowView1InRegionCommand()
-        {
-            this.Resolve<IViewManager>().CreateAndShowViewInRegion(
-                "MainRegion", typeof(List));
-        }
-
-        private void ExecuteShowView2InRegionCommand()
-        {
-            this.Resolve<IViewManager>().ShowViewInRegion(
-                "MainRegion", new Shel());
-        }
+              
 
         #endregion
 
+        #region SwitchView
+
+        
+        public ICommand ShelfSwitch 
+        {
+            get 
+            {
+                return new Microsoft.Practices.Prism.Commands.DelegateCommand(() =>
+                    {
+                        var rm = ServiceLocator.Current.GetInstance<IRegionManager>();
+                        IRegion rgn = rm.Regions["MainRegion"];
+
+                        foreach (var view in rgn.Views)
+                        {
+                            rgn.Remove(view);
+                        }
+                        rgn.Add(new Shelf());
+                    });
+            }
+        }
+
+        
+        public ICommand ListSwitch
+        {
+            get
+            {
+                return new Microsoft.Practices.Prism.Commands.DelegateCommand(() =>
+                {
+                    var rm = ServiceLocator.Current.GetInstance<IRegionManager>();
+                    IRegion rgn = rm.Regions["MainRegion"];
+
+                    foreach (var view in rgn.Views)
+                    {
+                        rgn.Remove(view);
+                    }
+                    rgn.Add(new List());
+                });
+            }
+        }
+
         #endregion
-
-        //#region SwitchView
-
-        //IRegionManager rm =  ServiceLocator.Current.GetInstance<IRegionManager>();
-        //IRegion rgn = rm.Regions["ListRegion"];
-
-        //Uri vu = new Uri(currentView, UriKind.Relative);
-        //rgn.RequestNavigate(vu, CheckForError);
-
-        //#endregion
 
 
         #region Actions
@@ -223,7 +170,7 @@ namespace BookLibrary.ViewModel
         /// <summary>
         /// Загрузка всех книг в коллекцию
         /// </summary>
-        public void ProcessXml() //(object param)
+        public void ProcessXml() 
         {
             string fileName = ConfigurationManager.AppSettings["FilePath"];
             //string fileName = param as string;
@@ -261,9 +208,7 @@ namespace BookLibrary.ViewModel
                                 Url = (string)material.Attribute("url"),
                                 Shelf = (string)material.Attribute("shelf")
                             });
-
-
-                        //this.BookListCollection.IsUpdatePaused = true;
+                        
 
                         // Добавить все книги в коллекцию
                         foreach (var book in books)
@@ -282,8 +227,7 @@ namespace BookLibrary.ViewModel
                                 );
                         }
                     }
-
-                    //this.BookListCollection.IsUpdatePaused = false;
+                    
                 }
             }
         }
